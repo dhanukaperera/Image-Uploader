@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Uploader</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script>
+
+
+    /*window.onload = function() {
+        var uploadedImageUrl = "https://www.w3schools.com/";
+        var ip = "localhost:8080";
+         swal({
+             title: "Good job!",
+             text: "Image Sucessfully Uploaded.",
+             icon: "success",
+
+             buttons: [true, "Open Image"],
+         })
+             .then((willOpen) => {
+                 if (willOpen) {
+                     window.open(uploadedImageUrl);
+                     window.location.href = ip;
+                 }else{
+                     window.location.href = ip;
+                 }
+             });
+
+     };*/
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function () {
+            $("#subtn").click(function () {
+                if ($('#filename').get(0).files.length === 0) {
+                    swal("Oops!", "Please select an image to upload", "error");
+                    return false;
+                } else {
+                    $( "#uploadForm" ).submit();
+                    swal("Uploading...", {
+                        button: false,
+                      //  timer: 5000,
+                    })
+                }
+            });
+        });
+
+
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand');
+        @import url('https://fonts.googleapis.com/css?family=Raleway');
+
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        p {
+            font-family: 'Raleway', serif;
+        }
+
+        .title {
+            font-size: 3.5em;
+        }
+
+        img {
+
+            padding: 5px;
+
+            max-height: 50%;
+
+        }
+
+        .column {
+            padding: 4%;
+
+        }
+
+        .col-left {
+            padding: 0 auto;
+
+        }
+
+    </style>
+</head>
+
+<body>
+<section class="hero is-primary is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns col-left">
+                <div class=" column">
+                    <h1 class="title">
+                        Image Uploader
+                    </h1>
+                    <form  id="uploadForm" method="post" enctype="multipart/form-data"
+                          th:action="@{/uploadFile}" >
+                        <div class="field">
+                            <div class="file is-warning">
+                                <label class="file-label">
+                                    <input id="filename" accept='image/*' onchange="readURL(this);" class="file-input"
+                                           type="file" name="file">
+                                    <span class="file-cta">
+                                <span class="file-icon">
+                                  <i class="fas fa-camera"></i>
+                                </span>
+                                <span class="file-label">
+                                  Select Image…
+                                </span>
+                              </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <br><br>
+                            <p>
+                                AWS Practical Assignment <br>
+                                Current Trends of Software Engineering – SE4010 <br>
+                                Student No : IT14031380 <br>
+                                Student Name : Perera P.D.S <br>
+                            </p>
+                        </div>
+                        <input id="subtn" class="button button is-dark" type="submit" value="Upload">
+                    </form>
+                </div>
+                <br><br>
+                <div class="column ">
+                    <figure class=" image">
+                        <img id="blah" alt="your image"
+                             src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDU4IDU4IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1OCA1ODsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxnPgoJPHBhdGggZD0iTTU3LDZIMUMwLjQ0OCw2LDAsNi40NDcsMCw3djQ0YzAsMC41NTMsMC40NDgsMSwxLDFoNTZjMC41NTIsMCwxLTAuNDQ3LDEtMVY3QzU4LDYuNDQ3LDU3LjU1Miw2LDU3LDZ6IE01Niw1MEgyVjhoNTRWNTB6IiBmaWxsPSIjZWNmMGYxIi8+Cgk8cGF0aCBkPSJNMTYsMjguMTM4YzMuMDcxLDAsNS41NjktMi40OTgsNS41NjktNS41NjhDMjEuNTY5LDE5LjQ5OCwxOS4wNzEsMTcsMTYsMTdzLTUuNTY5LDIuNDk4LTUuNTY5LDUuNTY5ICAgQzEwLjQzMSwyNS42NCwxMi45MjksMjguMTM4LDE2LDI4LjEzOHogTTE2LDE5YzEuOTY4LDAsMy41NjksMS42MDIsMy41NjksMy41NjlTMTcuOTY4LDI2LjEzOCwxNiwyNi4xMzhzLTMuNTY5LTEuNjAxLTMuNTY5LTMuNTY4ICAgUzE0LjAzMiwxOSwxNiwxOXoiIGZpbGw9IiNlY2YwZjEiLz4KCTxwYXRoIGQ9Ik03LDQ2YzAuMjM0LDAsMC40Ny0wLjA4MiwwLjY2LTAuMjQ5bDE2LjMxMy0xNC4zNjJsMTAuMzAyLDEwLjMwMWMwLjM5MSwwLjM5MSwxLjAyMywwLjM5MSwxLjQxNCwwczAuMzkxLTEuMDIzLDAtMS40MTQgICBsLTQuODA3LTQuODA3bDkuMTgxLTEwLjA1NGwxMS4yNjEsMTAuMzIzYzAuNDA3LDAuMzczLDEuMDQsMC4zNDUsMS40MTMtMC4wNjJjMC4zNzMtMC40MDcsMC4zNDYtMS4wNC0wLjA2Mi0xLjQxM2wtMTItMTEgICBjLTAuMTk2LTAuMTc5LTAuNDU3LTAuMjY4LTAuNzItMC4yNjJjLTAuMjY1LDAuMDEyLTAuNTE1LDAuMTI5LTAuNjk0LDAuMzI1bC05Ljc5NCwxMC43MjdsLTQuNzQzLTQuNzQzICAgYy0wLjM3NC0wLjM3My0wLjk3Mi0wLjM5Mi0xLjM2OC0wLjA0NEw2LjMzOSw0NC4yNDljLTAuNDE1LDAuMzY1LTAuNDU1LDAuOTk3LTAuMDksMS40MTJDNi40NDcsNDUuODg2LDYuNzIzLDQ2LDcsNDZ6IiBmaWxsPSIjZWNmMGYxIi8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
